@@ -1,0 +1,20 @@
+<form action="/new-todo" method="POST">
+                    <input type="text" name="link">
+                    <input type="text" name="img">
+                    <input type="text" name="title">
+                    <input type="text" name="chanel">
+                    <input type="number" name="view">
+                    <input type="text" name="date">
+                    <button type=" submit ">Thêm Video</button>
+                </form>
+
+                <form action="/delete-todo" method="POST">
+                    <input type="text" name="title">
+                    <button type="submit">Xóa Video</button>
+                </form>
+
+                <form action="/fix-todo" method="POST">
+                    <input type="text" name="title">
+                    <input type="text" name="newtitle">
+                    <button type="submit">Fix</button>
+                </form>
