@@ -3,12 +3,16 @@ const bodyParser = require("body-parser")
 const MongoClient = require("mongodb").MongoClient
 const path = require('path');
 const app = express()
+
+let db;
+
 app.use(express.static(__dirname + "/public"));
 
 MongoClient.connect("mongodb://localhost:27017", (err, client) => {
     if (err) {
         return console.log(err)
     }
+    db = client.db("todo")
     console.log("Đã kết nối tới database")
 })
 
@@ -64,10 +68,10 @@ let videoList = [{
     {
         link: "https://www.youtube.com/embed/5zU8htCuqW8",
         img: "https://yt3.ggpht.com/a/AATXAJyOvLRuFlg9psPYnR7uRTbNEJonq570SJLtQg=s88-c-k-c0xffffffff-no-rj-mo",
-        title: "Baki Vs Shunsei Kaku -Yujiro Proud of Baki 😊 -| Raitai tournament -| Baki 2020 !! Episode 1 (バキ 1 話)",
+        title: "Baki Vs Shunsei Kaku -Yujiro Proud of Baki -| Raitai tournament -| Baki 2020 !! Episode 1",
         chanel: "Chinda AMV ",
         view: "2.774.876 lượt xem•5 thg 6, 2020"
-    },
+    }
 ]
 
 
@@ -77,9 +81,13 @@ app.set("view engine", "ejs")
 
 // app.use(express.static(__dirname));
 
-// app.get("/", function(req, res) {
-//     res.send("Hello from sever")
-// })
+app.get("/todo", function(req, res) {
+    let todoList = db.collection("newtodo").find().toArray().then(result => {
+        console.log(result)
+    }).catch(error => {
+        console.log(error)
+    })
+})
 
 // app.get("/about", function(req, res) {
 //     res.send("<h1>This is the about function</h1>")
@@ -94,8 +102,9 @@ app.get("/", function(req, res) {
 
 app.post("/new-todo", function(req, res) {
     console.log("Đã nhận request", req.body)
-    let newTodo = req.body;
-    videoList.push(newTodo);
+        // let newTodo = req.body;
+        // videoList.push(newTodo);
+        db.collection("newtodo").insertOne(req.body).then()
 })
 
 app.post("/delete-todo", function(req, res) {

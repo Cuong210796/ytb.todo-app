@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết todo</title>
+</head>
+
+<body>
+    <form action="POST" action="/update-todo">
+        <input type="hidden" id="todoID" name="todoID" value="<%=todo._id %>">
+        <input type="text" id="todoTittle" name="todoTittle" value="<%=todo._tittle %>">
+        <button type="submit"> Cập nhật todo </button>
+    </form>
+    <form action="POST" action="/delete-todo">
+        <input type="hidden" id="todoID" name="todoID" value="<%=todo._id %>">
+        <input type="text" id="todoTittle" name="todoTittle" value="<%=todo._tittle %>">
+        <button type="submit"> Xóa todo </button>
+    </form>
+</body>
+
+</html>
