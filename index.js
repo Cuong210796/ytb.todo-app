@@ -2,6 +2,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const MongoClient = require("mongodb").MongoClient
 const path = require('path');
+const { read } = require("fs");
 const app = express()
 
 let db;
@@ -84,27 +85,33 @@ app.set("view engine", "ejs")
 app.get("/todo", function(req, res) {
     let todoList = db.collection("newtodo").find().toArray().then(result => {
         console.log(result)
+        res.render("index.ejs", { todoList: results })
     }).catch(error => {
         console.log(error)
     })
 })
 
-// app.get("/about", function(req, res) {
-//     res.send("<h1>This is the about function</h1>")
-// })
+
+app.get("/todo/:id", function(req, res) {
+        var id = req.pagrams['id'];
+        res.send('id của todo là' + id);
+    })
+    // app.get("/about", function(req, res) {
+    //     res.send("<h1>This is the about function</h1>")
+    // })
 
 
 app.get("/", function(req, res) {
     // console.log(__dirname)
     // res.sendFile(__dirname + "/index.html")
-    res.render("index.ejs", { result: videoList })
+    res.render("index.ejs")
 })
 
 app.post("/new-todo", function(req, res) {
     console.log("Đã nhận request", req.body)
         // let newTodo = req.body;
         // videoList.push(newTodo);
-        db.collection("newtodo").insertOne(req.body).then()
+    db.collection("newtodo").insertOne(req.body).then()
 })
 
 app.post("/delete-todo", function(req, res) {
